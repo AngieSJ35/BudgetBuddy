@@ -18,49 +18,120 @@
             }
 
             .topbar {
-                background-color: #333;
-                color: white;
+                background-color: rgba(37, 91, 141, 1);
+                color: #fff;
                 padding: 10px;
-                text-align: right;
+                text-align: center;
+                display: flex;
+                height: 60px;
+       
+                width: 100%;
+                position: fixed;
             }
-
+            
+            .topbar h1{
+                width: 370px;
+                height: 50px;
+                
+                /*background-color: rgba(119, 159, 161, 1);*/
+                color: white;
+                text-align: center;              
+                /*display: flex;*/
+                align-items: center;
+                justify-content: center;              
+                font-size: 30px;
+                position: fixed;
+                left: 550px;
+            }
+            
+            .topbar button {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;               
+                width: 150px;
+                padding: 12px 20px;
+                margin: 10px 10px;
+                box-sizing: border-box;
+                border: 3px solid rgba(119, 159, 161, 1);
+                border-radius: 4px;
+                background-color: whitesmoke;
+                color: rgba(119, 159, 161, 1);
+                font-weight: 30px;
+                font-size: 15px;
+                flex: 1;
+            }
             .sidebar {
                 height: 100%;
-                width: 250px;
+                width: 280px;
                 position: fixed;
-                background-color: #111;
+                background-color: rgba(119, 159, 161, 1);
                 padding-top: 60px; /* Ajusta según el tamaño de la barra superior */
                 padding-left: 10px;
                 color: white;
+                margin-top: 80px;
             }
 
             .content {
-                margin-left: 250px;
+                margin-left: 280px;
                 padding: 16px;
+                /*background-color: lightcyan;*/
             }
+            
+            .content h2{
+                width: 370px;
+                height: 50px;
+                background-color: rgba(119, 159, 161, 1);
+                color: white;
+                text-align: center;
+                margin-bottom: 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                font-size: 20px;
+            }
+            
+            .content p{
+                width: 370px;
+                height: 50px;
+                background-color: rgba(119, 159, 161, 1);
+                color: white;
+                text-align: center;
+                margin-bottom: 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                font-size: 20px;
+            }
+            
             .sidebar button {
                 display: block;
-                width: 100%;
+                width: 95%;
                 text-align: left;
                 padding: 10px;
                 margin-bottom: 5px;
-                background-color: #f1f1f1;
-                border: none;
-                text-decoration: none;
-                font-size: 16px;
-                color: black;
-                cursor: pointer;
+                font-size: 16px;             
+                cursor: pointer;               
+                box-sizing: border-box;
+                border: 3px solid rgba(119, 159, 161, 1);
+                border-radius: 4px;
+                background-color: whitesmoke;
+                color: rgba(119, 159, 161, 1);
+                font-weight: 30px;
+                font-size: 15px;
+                flex: 1;
             }
-            .bottombutton {
-                position: fixed;
-                bottom: 10px;
-                left: 10px;
-            }
+
         </style>
     </head>
     <body>
 
         <div class="topbar">
+            <h1>BudgetBuddy</h1>
             <button onclick="cerrarSesion()">Cerrar Sesión</button>
         </div>
 
@@ -77,7 +148,7 @@
             <p>Selecciona una opción en la barra lateral.</p>
         </div>
 
-        <button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button>
+            <!-- comment<button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button> -->
 
         <script>
             function cargarContenido(url) {

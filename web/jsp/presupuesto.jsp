@@ -30,10 +30,24 @@
                 text-align: center;
                 margin-bottom: 20px;
             }
+            
+            .saldo h2{
+                width: 370px;
+                height: 50px;
+                /*background-color: lightgray;*/
+                color: rgba(36, 82, 124, 1);
+                text-align: center;
+                margin-bottom: 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+            }
             .gastos, .ingresos {
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 20px;
+                /*background-color: yellow;*/
             }
             .cuadro {
                 width: 48%;
@@ -41,10 +55,88 @@
                 border: 1px solid #ccc;
                 border-radius: 5px;
                 box-sizing: border-box;
+                /*background-color: pink;*/
             }
+            
+            .cuadro form{
+                width: 200px;
+                height: 200px;
+                background-color: rgba(223, 203, 168, 0.5);
+                border-bottom-left-radius: 20px;
+                border-bottom-right-radius: 20px;
+            }
+            
+            label{
+                margin: 10px 10px;
+                font-weight: 30px;
+                font-size: 15px;
+                color: rgba(119, 159, 161, 1);
+            }
+            
+            input[type=text], input[type=password]{
+                 width: 80%;
+                 height: 10px;
+                 padding: 12px 20px;
+                 margin: 4px 10px;
+                 box-sizing: border-box;
+                 border: 3px solid rgba(119, 159, 161, 1);
+                 border-radius: 4px;
+                 background-color: rgba(223, 203, 168, 0.5);
+            }
+            
+            .btnAgregar{
+                width: 110px;
+                height: 30px;
+                padding: 0px;
+                margin: 10px 40px;
+                box-sizing: border-box;
+                border: 3px solid rgba(119, 159, 161, 1);
+                border-radius: 4px;
+                background-color: rgba(223, 203, 168, 0.5);
+                color: rgba(119, 159, 161, 1);
+                font-weight: 0px;
+                font-size: 13px;
+                align-items: center;
+            }
+            
+            .cuadro h3{
+                width: 200px;
+                height: 50px;
+                background-color: rgba(119, 159, 161, 1);
+                color: white;
+                text-align: center;
+                margin-bottom: 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                font-size: 20px;
+            }
+            
+            .cuadro p {
+                width: 200px;
+                height: 200px;
+                background-color: rgba(223, 203, 168, 0.5);
+                color: white;
+                text-align: center;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom-left-radius: 20px;
+                border-bottom-right-radius: 20px;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                font-size: 20px;
+            }
+            
+            
             .agregarGasto, .agregarIngreso {
                 text-align: center;
                 margin-top: 20px;
+                
             }
         </style>
     </head>
@@ -52,7 +144,6 @@
 
         <div class="saldo">
             <H2>Saldo: $<%= request.getAttribute("saldo") %></H2>
-
         </div>
 
         <div class="gastos">
@@ -78,7 +169,7 @@
                     <label for="valor">Monto:</label>
                     <input type="text" id="valor" name="valor" required><br>
 
-                    <button type="submit" name="gasto">Agregar Gasto</button>
+                    <button type="submit" name="gasto" class = "btnAgregar">Agregar Gasto</button>
                 </form>
             </div>
         </div>
@@ -105,7 +196,7 @@
                     <label for="valor">Monto:</label>
                     <input type="text" id="valor" name="valor" required><br>
 
-                    <button type="submit" name="ingreso">Agregar Ingreso</button>
+                    <button type="submit" name="ingreso" class = "btnAgregar">Agregar Ingreso</button>
                 </form>
 
             </div>
