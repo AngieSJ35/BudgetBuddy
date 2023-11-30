@@ -67,7 +67,7 @@
         <div class="sidebar">
             <button onclick="cargarContenidoPrincipal()">Inicio</button>
             <button onclick="cargarContenido('calendario.jsp')">Calendario</button>
-            <button onclick="cargarContenido('presupuesto.jsp')">Presupuesto</button>
+            <button onclick="cargarContenido('<%= request.getContextPath()%>/Presupuesto')">Presupuesto</button>
             <button onclick="cargarContenido('mercado.jsp')">Mercado</button>
         </div>
 
@@ -80,17 +80,22 @@
         <button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button>
 
         <script>
-            function cargarContenido(archivo) {
-                // Usa AJAX para cargar el contenido del archivo en el div 'contenidoPrincipal'
+            function cargarContenido(url) {
+                // Usa AJAX para hacer una solicitud al servlet y cargar el contenido en el div 'contenidoPrincipal'
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        document.getElementById('contenidoPrincipal').innerHTML = xhr.responseText;
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            document.getElementById('contenidoPrincipal').innerHTML = xhr.responseText;
+                        } else {
+                            alert('Error al cargar el contenido.');
+                        }
                     }
                 };
-                xhr.open('GET', archivo, true);
+                xhr.open('GET', url, true);
                 xhr.send();
             }
+
 
             function cargarContenidoPrincipal() {
                 // Cargar el contenido principal (puedes ajustar según sea necesario)

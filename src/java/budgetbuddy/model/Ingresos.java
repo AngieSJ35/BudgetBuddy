@@ -4,31 +4,33 @@ package budgetbuddy.model;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 /**
  *
  * @author lica-
  */
-public class Gastos {
-
+public class Ingresos {
+    
     private int id;
     private String nombre;
     private int valor;
     private boolean pagado;
     private int usuario;
 
-    public Gastos(int id, String nombre, int valor, boolean pagado, int usuario) {
+    public Ingresos(int id, String nombre, int valor, boolean pagado, int usuario) {
         this.id = id;
         this.nombre = nombre;
         this.valor = valor;
-        this.pagado = pagado;
+        this.pagado = pagado;        
         this.usuario = usuario;
-    }
 
-    public Gastos() {
     }
 
     public int getUsuario() {
         return usuario;
+    }
+
+    public Ingresos() {
     }
 
     public void setUsuario(int usuario) {
@@ -66,5 +68,6 @@ public class Gastos {
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
     }
-
+    
+    
 }

@@ -92,7 +92,7 @@ public class UsuarioDAO {
         return null;
     }
 
-    public boolean validarCredenciales(String correo, String contrasena) throws SQLException {
+    public AutenticacionResult validarCredenciales(String correo, String contrasena) throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -103,8 +103,15 @@ public class UsuarioDAO {
             statement.setString(2, contrasena);
             resultSet = statement.executeQuery();
 
-            return resultSet.next();
-
+            if (resultSet.next()) {
+                // Credenciales válidas
+                int usuarioId = resultSet.getInt("id");
+                System.out.println(usuarioId);
+                return new AutenticacionResult(true, usuarioId);
+            } else {
+                // Credenciales inválidas
+                return new AutenticacionResult(false, -1); // -1 o algún otro valor que indique que no se encontró el usuario
+            }
         } finally {
             if (resultSet != null) {
                 resultSet.close();
@@ -124,6 +131,25 @@ public class UsuarioDAO {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+        }
+    }
+
+    public static class AutenticacionResult {
+
+        private final boolean credencialesValidas;
+        private final int usuarioId;
+
+        public AutenticacionResult(boolean credencialesValidas, int usuarioId) {
+            this.credencialesValidas = credencialesValidas;
+            this.usuarioId = usuarioId;
+        }
+
+        public boolean isCredencialesValidas() {
+            return credencialesValidas;
+        }
+
+        public int getUsuarioId() {
+            return usuarioId;
         }
     }
 }

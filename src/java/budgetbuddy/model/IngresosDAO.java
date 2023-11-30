@@ -19,19 +19,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GastosDAO {
+public class IngresosDAO {
 
     private Connection connection;
 
-    public GastosDAO(Connection connection) {
+    public IngresosDAO(Connection connection) {
         this.connection = connection;
     }
 
-    public List<Gastos> obtenerGastosPorUsuario(int usuarioC) {
-        List<Gastos> listaGastos = new ArrayList<>();
+    public List<Ingresos> obtenerIngresosPorUsuario(int usuarioC) {
+        List<Ingresos> listaIngresos = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM gastos WHERE usuario = ?";
+            String sql = "SELECT * FROM ingresos WHERE usuario = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, usuarioC);
 
@@ -42,8 +42,8 @@ public class GastosDAO {
                         int valor = resultSet.getInt("valor");
                         boolean pagado = resultSet.getBoolean("pagado");
                         int usuario = resultSet.getInt("usuario");
-                        Gastos gasto = new Gastos(id, nombre, valor, pagado, usuario);
-                        listaGastos.add(gasto);
+                        Ingresos ingreso = new Ingresos(id, nombre, valor, pagado, usuario);
+                        listaIngresos.add(ingreso);
                     }
                 }
             }
@@ -51,32 +51,36 @@ public class GastosDAO {
             e.printStackTrace();
         }
 
-        return listaGastos;
+        return listaIngresos;
     }
 
-
-        public boolean insertarGasto(Gastos gasto)  throws SQLException {
-        String sql = "INSERT INTO gastos (nombre, valor, pagado, usuario) VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, gasto.getNombre());
-                statement.setInt(2, gasto.getValor());
-                statement.setBoolean(3, gasto.isPagado());
-                statement.setInt(4, gasto.getUsuario());
-            statement.executeUpdate();
-            System.out.println("Valor de usuario: " + gasto.getUsuario());
-        }
-        return true;
-    }
-
-    public boolean actualizarGasto(Gastos gasto) {
+    public boolean insertarIngreso(Ingresos ingreso) {
         try {
-            String sql = "UPDATE gastos SET nombre = ?, valor = ?, pagado = ? WHERE id = ?";
+            String sql = "INSERT INTO ingresos (nombre, valor, pagado, usuario) VALUES (?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, gasto.getNombre());
-                statement.setInt(2, gasto.getValor());
-                statement.setBoolean(3, gasto.isPagado());
-                statement.setInt(4, gasto.getId());
+                statement.setString(1, ingreso.getNombre());
+                statement.setInt(2, ingreso.getValor());
+                statement.setBoolean(3, ingreso.isPagado());
+                // Suponiendo que hay un atributo "nombreUsuario" en la clase Gastos
+                statement.setInt(4, ingreso.getUsuario());
+
+                int filasAfectadas = statement.executeUpdate();
+                return filasAfectadas > 0;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
+    public boolean actualizarIngreso(Ingresos ingreso) {
+        try {
+            String sql = "UPDATE ingreso SET nombre = ?, valor = ?, pagado = ? WHERE id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, ingreso.getNombre());
+                statement.setInt(2, ingreso.getValor());
+                statement.setBoolean(3, ingreso.isPagado());
+                statement.setInt(4, ingreso.getId());
 
                 int filasAfectadas = statement.executeUpdate();
                 return filasAfectadas > 0;
@@ -87,9 +91,9 @@ public class GastosDAO {
         }
     }
 
-    public boolean eliminarGasto(int id) {
+    public boolean eliminarIngreso(int id) {
         try {
-            String sql = "DELETE FROM gastos WHERE id = ?";
+            String sql = "DELETE FROM ingresos WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, id);
 

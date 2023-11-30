@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -44,7 +45,6 @@ public class LoginServlet extends HttpServlet {
         String nombre = request.getParameter("nombre");
         String correo = request.getParameter("correo");
         String contrasena = request.getParameter("contrasena");
-        System.out.println(contrasena);
         Usuario nuevoUsuario = new Usuario(0, nombre, correo, contrasena, "");
         Connection coneccion;
 
@@ -54,11 +54,13 @@ public class LoginServlet extends HttpServlet {
             try {
                 coneccion = DBConnection.getConnection();
                 UsuarioDAO usuarioDAO = new UsuarioDAO(coneccion);
-                boolean credencialesValidas = usuarioDAO.validarCredenciales(correo, contrasena);
-                System.out.println(credencialesValidas);
-                if (credencialesValidas) {
+                UsuarioDAO.AutenticacionResult  credencialesValidas = usuarioDAO.validarCredenciales(correo, contrasena);
+                if (credencialesValidas.isCredencialesValidas()) {
                     // Redirige a una página de inicio exitoso
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("usuarioId",  credencialesValidas.getUsuarioId());
                     response.sendRedirect("jsp/inicio.jsp");
+                    
                 } else {
                     // Redirige a una página de error de inicio de sesión
                     response.sendRedirect("errorInicioSesion.jsp");
