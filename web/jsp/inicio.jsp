@@ -15,6 +15,7 @@
             body {
                 margin: 0;
                 font-family: Arial, sans-serif;
+                padding: 0px;
             }
 
             .topbar {
@@ -24,28 +25,23 @@
                 text-align: center;
                 display: flex;
                 height: 60px;
-       
-                width: 100%;
+                width:100%;
                 position: fixed;
             }
             
             .topbar h1{
-                width: 370px;
-                height: 50px;
-                
-                /*background-color: rgba(119, 159, 161, 1);*/
+                height: 20px;
                 color: white;
                 text-align: center;              
-                /*display: flex;*/
+                display: flex;
                 align-items: center;
                 justify-content: center;              
-                font-size: 30px;
-                position: fixed;
+                position: absolute; 
                 left: 550px;
             }
             
             .topbar button {
-                position: fixed;
+                position: absolute;
                 top: 10px;
                 right: 10px;
                 cursor: pointer;               
@@ -61,6 +57,7 @@
                 font-size: 15px;
                 flex: 1;
             }
+            
             .sidebar {
                 height: 100%;
                 width: 280px;
@@ -75,7 +72,9 @@
             .content {
                 margin-left: 280px;
                 padding: 16px;
-                /*background-color: lightcyan;*/
+                background-color: red;
+                margin-left: 280px;
+                
             }
             
             .content h2{
@@ -91,6 +90,7 @@
                 border-top-left-radius: 20px;
                 border-top-right-radius: 20px;
                 font-size: 20px;
+                margin-top: 120px;
             }
             
             .content p{
@@ -130,7 +130,7 @@
     </head>
     <body>
 
-        <div class="topbar">
+        <div class = "topbar" >
             <h1>BudgetBuddy</h1>
             <button onclick="cerrarSesion()">Cerrar Sesión</button>
         </div>

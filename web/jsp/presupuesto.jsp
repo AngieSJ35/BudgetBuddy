@@ -29,12 +29,13 @@
             .saldo {
                 text-align: center;
                 margin-bottom: 20px;
+                /*background-color: yellow;*/
             }
             
             .saldo h2{
                 width: 370px;
                 height: 50px;
-                /*background-color: lightgray;*/
+                background-color: buttonface;
                 color: rgba(36, 82, 124, 1);
                 text-align: center;
                 margin-bottom: 0px;
@@ -42,12 +43,14 @@
                 align-items: center;
                 justify-content: center;
                 font-size: 20px;
+                border-radius: 10pc;
             }
+            
             .gastos, .ingresos {
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 20px;
-                /*background-color: yellow;*/
+                background-color: yellow;
             }
             .cuadro {
                 width: 48%;
