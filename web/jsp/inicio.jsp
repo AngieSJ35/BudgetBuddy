@@ -28,7 +28,7 @@
                 width:100%;
                 position: fixed;
             }
-            
+
             .topbar h1{
                 height: 20px;
                 color: white;
@@ -39,12 +39,12 @@
                 position: absolute; 
                 left: 550px;
             }
-            
+
             .topbar button {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                cursor: pointer;               
+                cursor: pointer;
                 width: 150px;
                 padding: 12px 20px;
                 margin: 10px 10px;
@@ -76,7 +76,7 @@
                 margin-left: 280px;
                 
             }
-            
+
             .content h2{
                 width: 370px;
                 height: 50px;
@@ -92,7 +92,7 @@
                 font-size: 20px;
                 margin-top: 120px;
             }
-            
+
             .content p{
                 width: 370px;
                 height: 50px;
@@ -107,15 +107,15 @@
                 border-top-right-radius: 20px;
                 font-size: 20px;
             }
-            
+
             .sidebar button {
                 display: block;
                 width: 95%;
                 text-align: left;
                 padding: 10px;
                 margin-bottom: 5px;
-                font-size: 16px;             
-                cursor: pointer;               
+                font-size: 16px;
+                cursor: pointer;
                 box-sizing: border-box;
                 border: 3px solid rgba(119, 159, 161, 1);
                 border-radius: 4px;
@@ -138,8 +138,8 @@
         <div class="sidebar">
             <button onclick="cargarContenidoPrincipal()">Inicio</button>
             <button onclick="cargarContenido('calendario.jsp')">Calendario</button>
-            <button onclick="cargarContenido('<%= request.getContextPath()%>/Presupuesto')">Presupuesto</button>
-            <button onclick="cargarContenido('mercado.jsp')">Mercado</button>
+            <button onclick="cargarContenido('<%= request.getContextPath()%>/presupuesto', 'GET')">Presupuesto</button>
+            <button onclick="cargarContenido('<%= request.getContextPath()%>/mercado', 'GET')">Mercado</button>
         </div>
 
         <div class="content" id="contenidoPrincipal">
@@ -148,10 +148,10 @@
             <p>Selecciona una opción en la barra lateral.</p>
         </div>
 
-            <!-- comment<button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button> -->
+        <!-- comment<button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button> -->
 
         <script>
-            function cargarContenido(url) {
+            function cargarContenido(url, method, data) {
                 // Usa AJAX para hacer una solicitud al servlet y cargar el contenido en el div 'contenidoPrincipal'
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
@@ -163,8 +163,16 @@
                         }
                     }
                 };
-                xhr.open('GET', url, true);
-                xhr.send();
+                if (method.toUpperCase() === 'GET') {
+                    xhr.open('GET', url, true);
+                    xhr.send();
+                } else if (method.toUpperCase() === 'POST') {
+                    xhr.open('POST', url, true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
+                } else {
+                    alert('Método no válido');
+                }
             }
 
 

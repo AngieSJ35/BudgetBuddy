@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author lica-
  */
-@WebServlet(name = "Presupuesto", urlPatterns = {"/Presupuesto"})
+//@WebServlet(name = "Presupuesto", urlPatterns = {"/Presupuesto"})
 public class PresupuestoServlet extends HttpServlet {
 
     /**

@@ -12,5 +12,5 @@ package budgetbuddy.util;
 public class DBConfig {
     public static final String URL = "jdbc:mysql://localhost:3306/budgetbuddy";
     public static final String USER = "root";
-    public static final String PASSWORD = "LAU89cetS.nat/38";
+    public static final String PASSWORD = "root";
 }
