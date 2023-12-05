@@ -1,6 +1,6 @@
 <%-- 
-    Document   : calendario
-    Created on : 29/11/2023, 7:45:50 p. m.
+    Document   : recordatorios
+    Created on : 4/12/2023, 4:45:04 p. m.
     Author     : lica-
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Calendario</h1>
+        <h1>Hello World!</h1>
     </body>
 </html>

@@ -26,6 +26,27 @@ public class IngresosDAO {
     public IngresosDAO(Connection connection) {
         this.connection = connection;
     }
+    
+    public int obtenerTotalIngresosPorUsuario(int usuarioC) {
+    int totalIngresos = 0;
+
+    try {
+        String sql = "SELECT SUM(valor) as total FROM ingresos WHERE usuario = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, usuarioC);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalIngresos = resultSet.getInt("total");
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return totalIngresos;
+}
 
     public List<Ingresos> obtenerIngresosPorUsuario(int usuarioC) {
         List<Ingresos> listaIngresos = new ArrayList<>();

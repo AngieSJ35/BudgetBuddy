@@ -23,22 +23,5 @@
 
         </form>
 
-        <script>
-            function consultarIngredientes() {
-                console.log('hola')
-                // Obtén los valores de los ingredientes desde los campos de entrada
-                var ingrediente1 = document.getElementsByName("ingrediente1")[0].value;
-                var ingrediente2 = document.getElementsByName("ingrediente2")[0].value;
-                var ingrediente3 = document.getElementsByName("ingrediente3")[0].value;
-
-                // Construye la cadena de datos para la solicitud POST
-                var postData = "ingrediente1=" + encodeURIComponent(ingrediente1) +
-                        "&ingrediente2=" + encodeURIComponent(ingrediente2) +
-                        "&ingrediente3=" + encodeURIComponent(ingrediente3);
-                
-                // Llama a cargarContenido con método POST y datos
-                //cargarContenido('/BudgetBuddy/Mercado', 'POST', postData);
-            }
-        </script>
     </body>
 </html>

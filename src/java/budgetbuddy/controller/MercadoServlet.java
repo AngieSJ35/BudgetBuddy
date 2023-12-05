@@ -4,22 +4,32 @@
  */
 package budgetbuddy.controller;
 
-import controller.ApiConnection;
+import budgetbuddy.model.Recomendacion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import org.json.JSONException;
 
 /**
  *
  * @author lica-
  */
-//@WebServlet(name = "Mercado", urlPatterns = {"/Mercado"})
+@WebServlet(name = "Mercado", urlPatterns = {"/Mercado"})
 public class MercadoServlet extends HttpServlet {
 
     /**
@@ -48,7 +58,6 @@ public class MercadoServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -79,21 +88,45 @@ public class MercadoServlet extends HttpServlet {
         String ingrediente1 = request.getParameter("ingrediente1");
         String ingrediente2 = request.getParameter("ingrediente2");
         String ingrediente3 = request.getParameter("ingrediente3");
-        System.out.println("MercadoServlet.doPost()");
 
         // Llama al método de la clase ApiConnection
-        JSONObject jsonResponse = ApiConnection.consultarAPI(ingrediente1, ingrediente2, ingrediente3);
+        List<Object> resultList = ApiConnection.consultarAPI(ingrediente1, ingrediente2, ingrediente3);
+        System.out.println(resultList.get(0).toString());
+        System.out.println("budgetbuddy.controller.MercadoServlet.doPost()");
+        // Puedes ajustar la lógica según la estructura de datos que hayas decidido devolver
+        try {
+            JSONObject jsonObject = new JSONObject(resultList.get(0).toString());
+            
+            // Puedes acceder a los elementos del JSON utilizando el objeto JSONObject
+            Map<String, Recomendacion> recomendacionesMap = new TreeMap<>();
 
-        // Muestra el JSON formateado en la consola del servidor
-        System.out.println("Respuesta JSON de la API:");
-        System.out.println(jsonResponse.toString(4)); // El argumento "4" indica la cantidad de espacios de sangría para la impresión
+            // Iterar sobre las claves del JSONObject y agregar las recomendaciones al TreeMap
+            for (String key : jsonObject.keySet()) {
+               
+                JSONObject recomendacionJson = jsonObject.getJSONObject(key);
+                Recomendacion recomendacion = new Recomendacion();
+                recomendacion.setIngredientes(recomendacionJson.getString("Ingredientes"));
+                recomendacion.setNombrePlatillo(recomendacionJson.getString("Nombre Platillo"));
+                recomendacion.setSimilitud(recomendacionJson.getDouble("Similitud"));
 
-        // Establece la respuesta JSON en la solicitud para ser utilizada en la página JSP
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.print(jsonResponse.toString());
-        }
+                recomendacionesMap.put(key, recomendacion);
+            }
+
+            // Ahora tienes un TreeMap ordenado por las claves (Recomendacion 1, 2, ..., 10)
+            // Puedes imprimir o hacer lo que necesites con las recomendaciones
+
+
+            request.setAttribute("recomendacionesMap", recomendacionesMap);
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/resultados.jsp");
+            dispatcher.forward(request, response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }  catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     /**

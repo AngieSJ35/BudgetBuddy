@@ -4,30 +4,19 @@
  */
 package budgetbuddy.controller;
 
-import budgetbuddy.model.Gastos;
-import budgetbuddy.model.GastosDAO;
-import budgetbuddy.model.Ingresos;
-import budgetbuddy.model.IngresosDAO;
-import budgetbuddy.util.DBConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author lica-
  */
-public class InicioServlet extends HttpServlet {
+public class ResumenServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +35,10 @@ public class InicioServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InicioServlet</title>");            
+            out.println("<title>Servlet ResumenServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InicioServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResumenServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,43 +54,12 @@ public class InicioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Puedes realizar lógica adicional si es necesario antes de mostrar el JSP
-        HttpSession session = request.getSession(false); // Si la sesión no existe, no la crea
+         RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/resumen.jsp");
+        dispatcher.forward(request, response);
 
-        int usuarioId = 0;
-
-        if (session != null) {
-            // Obtener información sobre el usuario desde la sesión
-            usuarioId = (int) session.getAttribute("usuarioId");
-
-            // Realizar operaciones basadas en la información del usuario
-        }
-        Connection coneccion;
-         try {
-            coneccion = DBConnection.getConnection();
-            GastosDAO gastosDao = new GastosDAO(coneccion);
-            IngresosDAO ingresosDao = new IngresosDAO(coneccion);
-            
-            int gastosTotal = gastosDao.obtenerTotalGastosPorUsuario(usuarioId);
-            int ingresosTotal = ingresosDao.obtenerTotalIngresosPorUsuario(usuarioId);
-            int saldo = ingresosTotal - gastosTotal;
-            // Puedes almacenar la lista de gastos en el objeto request para que esté disponible en el JSP
-            request.setAttribute("totalGastos", gastosTotal);
-             System.out.println(gastosTotal + ' ' +  ingresosTotal + ' ' + saldo);
-            request.setAttribute("totalIngresos", ingresosTotal);
-            request.setAttribute("saldoInicio", saldo);
-            // Despachar a la página JSP para mostrar los resultados
-            request.getRequestDispatcher("jsp/inicio.jsp").forward(request, response);
-            //dispatcher.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-            // Manejar errores
-        }
-        // Luego, redirige a la página de inicio (inicio.jsp)
-        
-    }
+     }
 
     /**
      * Handles the HTTP <code>POST</code> method.

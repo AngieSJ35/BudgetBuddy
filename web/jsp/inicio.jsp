@@ -32,11 +32,11 @@
             .topbar h1{
                 height: 20px;
                 color: white;
-                text-align: center;              
+                text-align: center;
                 display: flex;
                 align-items: center;
-                justify-content: center;              
-                position: absolute; 
+                justify-content: center;
+                position: absolute;
                 left: 550px;
             }
 
@@ -57,7 +57,7 @@
                 font-size: 15px;
                 flex: 1;
             }
-            
+
             .sidebar {
                 height: 100%;
                 width: 280px;
@@ -74,7 +74,7 @@
                 padding: 16px;
                 background-color: red;
                 margin-left: 280px;
-                
+
             }
 
             .content h2{
@@ -136,16 +136,50 @@
         </div>
 
         <div class="sidebar">
-            <button onclick="cargarContenidoPrincipal()">Inicio</button>
-            <button onclick="cargarContenido('calendario.jsp')">Calendario</button>
+            <button onclick="cargarContenido('<%= request.getContextPath()%>/resumen', 'GET')">Inicio</button>
             <button onclick="cargarContenido('<%= request.getContextPath()%>/presupuesto', 'GET')">Presupuesto</button>
-            <button onclick="cargarContenido('<%= request.getContextPath()%>/mercado', 'GET')">Mercado</button>
+            <button onclick="cargarContenido('<%= request.getContextPath()%>/mercado', 'GET')">Sugerencias</button>
         </div>
 
         <div class="content" id="contenidoPrincipal">
             <!-- Contenido principal de la página -->
-            <h2>Contenido Principal</h2>
-            <p>Selecciona una opción en la barra lateral.</p>
+    <body>
+                    <!-- Primera sección con 3 cajas: Total, Gastos e Ingresos -->
+            <section>
+                <h2>Sección 1: Finanzas</h2>
+
+                <div>
+                    <label>Total:</label>
+                    <label><%= request.getAttribute("totalGastos") %></label>
+                </div>
+
+                <div>
+                    <label>Gastos:</label>
+                    <label><%= request.getAttribute("totalGastos") %></label>
+                </div>
+
+                <div>
+                    <label>Ingresos:</label>
+                    <label><%= request.getAttribute("totalIngresos") %></label>
+                </div>
+            </section>
+
+            <!-- Segunda sección con el nombre de un platillo y sus ingredientes -->
+            <section>
+                <h2>Sección 2: Recomendaciones</h2>
+
+                <div>
+                    <label>Nombre del platillo:</label>
+                    <label></label>
+                </div>
+
+                <div>
+                    <label>Ingredientes:</label>
+                    <label></label>
+                </div>
+            </section>
+    </body>
+
         </div>
 
         <!-- comment<button class="bottombutton" onclick="realizarAccion()">Botón Inferior</button> -->
@@ -174,12 +208,19 @@
                     alert('Método no válido');
                 }
             }
+            function consultarIngredientes() {
+                // Obtén los valores de los ingredientes desde los campos de entrada
+                var ingrediente1 = document.getElementsByName("ingrediente1")[0].value;
+                var ingrediente2 = document.getElementsByName("ingrediente2")[0].value;
+                var ingrediente3 = document.getElementsByName("ingrediente3")[0].value;
 
+                // Construye la cadena de datos para la solicitud POST
+                var postData = "ingrediente1=" + encodeURIComponent(ingrediente1) +
+                        "&ingrediente2=" + encodeURIComponent(ingrediente2) +
+                        "&ingrediente3=" + encodeURIComponent(ingrediente3);
 
-            function cargarContenidoPrincipal() {
-                // Cargar el contenido principal (puedes ajustar según sea necesario)
-                document.getElementById('contenidoPrincipal').innerHTML =
-                        '<h2>Contenido Principal</h2><p>Selecciona una opción en la barra lateral.</p>';
+                // Llama a cargarContenido con método POST y datos
+                cargarContenido('<%= request.getContextPath()%>/mercado', 'POST', postData);
             }
 
             function cerrarSesion() {

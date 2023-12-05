@@ -1,15 +1,18 @@
-// ApiConnection.java
-package controller;
+package budgetbuddy.controller;
+
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiConnection {
-    public static JSONObject consultarAPI(String ingrediente1, String ingrediente2, String ingrediente3) {
-        JSONObject jsonResponse = new JSONObject();
+    public static List<Object> consultarAPI(String ingrediente1, String ingrediente2, String ingrediente3) {
+        List<Object> resultList = new ArrayList<>();
 
         try {
             // Construye la URL de la API (ajusta la URL según tu configuración)
@@ -28,7 +31,7 @@ public class ApiConnection {
             int responseCode = connection.getResponseCode();
 
             if (responseCode == 200) { // Código 200 significa éxito
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 StringBuilder response = new StringBuilder();
                 String inputLine;
 
@@ -36,9 +39,11 @@ public class ApiConnection {
                     response.append(inputLine);
                 }
                 reader.close();
+                System.out.println(response);
 
-                // Convierte la respuesta a un objeto JSON
-                jsonResponse = new JSONObject(response.toString());
+                // Modificar la lógica de conversión según tus necesidades
+                // Aquí, simplemente añadimos el JSONObject a la lista
+                resultList.add(response.toString());
             } else {
                 System.out.println("La solicitud falló. Código de respuesta: " + responseCode);
             }
@@ -49,6 +54,6 @@ public class ApiConnection {
             e.printStackTrace();
         }
 
-        return jsonResponse;
+        return resultList;
     }
 }

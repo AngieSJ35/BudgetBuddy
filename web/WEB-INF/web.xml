@@ -16,6 +16,14 @@
         <servlet-name>MercadoServlet</servlet-name>
         <servlet-class>budgetbuddy.controller.MercadoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecordatorioServlet</servlet-name>
+        <servlet-class>budgetbuddy.controller.RecordatorioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResumenServlet</servlet-name>
+        <servlet-class>budgetbuddy.controller.ResumenServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -31,5 +39,13 @@
     <servlet-mapping>
         <servlet-name>MercadoServlet</servlet-name>
         <url-pattern>/mercado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecordatorioServlet</servlet-name>
+        <url-pattern>/recordatorio</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResumenServlet</servlet-name>
+        <url-pattern>/resumen</url-pattern>
     </servlet-mapping>
 </web-app>

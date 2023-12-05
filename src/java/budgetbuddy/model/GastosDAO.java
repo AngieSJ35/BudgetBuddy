@@ -27,6 +27,27 @@ public class GastosDAO {
         this.connection = connection;
     }
 
+    public int obtenerTotalGastosPorUsuario(int usuarioC) {
+        int totalGastos = 0;
+
+        try {
+            String sql = "SELECT SUM(valor) as total FROM gastos WHERE usuario = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, usuarioC);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        totalGastos = resultSet.getInt("total");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalGastos;
+    }
+
     public List<Gastos> obtenerGastosPorUsuario(int usuarioC) {
         List<Gastos> listaGastos = new ArrayList<>();
 
@@ -54,15 +75,14 @@ public class GastosDAO {
         return listaGastos;
     }
 
-
-        public boolean insertarGasto(Gastos gasto)  throws SQLException {
+    public boolean insertarGasto(Gastos gasto) throws SQLException {
         String sql = "INSERT INTO gastos (nombre, valor, pagado, usuario) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gasto.getNombre());
-                statement.setInt(2, gasto.getValor());
-                statement.setBoolean(3, gasto.isPagado());
-                statement.setInt(4, gasto.getUsuario());
+            statement.setInt(2, gasto.getValor());
+            statement.setBoolean(3, gasto.isPagado());
+            statement.setInt(4, gasto.getUsuario());
             statement.executeUpdate();
             System.out.println("Valor de usuario: " + gasto.getUsuario());
         }
