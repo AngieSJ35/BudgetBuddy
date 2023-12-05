@@ -9,16 +9,28 @@ package budgetbuddy.model;
  * @author lica-
  */
 public class Recomendacion {
+
     private String ingredientes;
     private String nombrePlatillo;
     private double similitud;
     private int usuario;
 
-    public Recomendacion(String ingredientes, String nombrePlatillo, double similitud) {
+    public Recomendacion(String ingredientes, String nombrePlatillo, double similitud, int usuario) {
         this.ingredientes = ingredientes;
         this.nombrePlatillo = nombrePlatillo;
         this.similitud = similitud;
         this.usuario = usuario;
+    }
+
+    public Recomendacion(String ingredientes, String nombrePlatillo, double similitud) {
+        this.ingredientes = ingredientes;
+        this.nombrePlatillo = nombrePlatillo;
+        this.similitud = similitud;
+    }
+
+    @Override
+    public String toString() {
+        return "Recomendacion{" + ", nombrePlatillo=" + nombrePlatillo + "ingredientes=" + ingredientes + '}';
     }
 
     public Recomendacion(String ingredientes, String nombrePlatillo) {
@@ -61,6 +73,4 @@ public class Recomendacion {
         this.similitud = similitud;
     }
 
-    
 }
-

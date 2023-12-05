@@ -22,12 +22,12 @@ public class RecomendacionesDAO {
     }
 
     public boolean insertarRecomendacion(Recomendacion recomendacion) throws SQLException {
-        String sql = "INSERT INTO recomendacion (nombre, ingredientes, usuario) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO recomendacion (nombre, ingredientes, usuario) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, recomendacion.getNombrePlatillo());
             statement.setString(2, recomendacion.getIngredientes());
-            statement.setInt(4, recomendacion.getUsuario());
+            statement.setInt(3, recomendacion.getUsuario());
             statement.executeUpdate();
         }
         return true;

@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
                     // Redirige a una página de inicio exitoso
                     HttpSession session = request.getSession(true);
                     session.setAttribute("usuarioId",  credencialesValidas.getUsuarioId());
-                    response.sendRedirect("jsp/inicio.jsp");
+                    response.sendRedirect("inicio");
                     
                 } else {
                     // Redirige a una página de error de inicio de sesión

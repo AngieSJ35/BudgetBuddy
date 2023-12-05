@@ -5,8 +5,11 @@
 package budgetbuddy.controller;
 
 import budgetbuddy.model.Recomendacion;
+import budgetbuddy.model.RecomendacionesDAO;
+import budgetbuddy.util.DBConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 import org.json.JSONException;
 
 /**
@@ -99,7 +103,7 @@ public class MercadoServlet extends HttpServlet {
             
             // Puedes acceder a los elementos del JSON utilizando el objeto JSONObject
             Map<String, Recomendacion> recomendacionesMap = new TreeMap<>();
-
+            Connection coneccion;
             // Iterar sobre las claves del JSONObject y agregar las recomendaciones al TreeMap
             for (String key : jsonObject.keySet()) {
                
@@ -108,7 +112,12 @@ public class MercadoServlet extends HttpServlet {
                 recomendacion.setIngredientes(recomendacionJson.getString("Ingredientes"));
                 recomendacion.setNombrePlatillo(recomendacionJson.getString("Nombre Platillo"));
                 recomendacion.setSimilitud(recomendacionJson.getDouble("Similitud"));
-
+                HttpSession session = request.getSession(false);
+                int usuarioId = (int) session.getAttribute("usuarioId");
+                recomendacion.setUsuario(usuarioId);
+                coneccion = DBConnection.getConnection();
+                RecomendacionesDAO recomendao = new RecomendacionesDAO(coneccion);
+                recomendao.insertarRecomendacion(recomendacion);
                 recomendacionesMap.put(key, recomendacion);
             }
 

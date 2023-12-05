@@ -8,6 +8,8 @@ import budgetbuddy.model.Gastos;
 import budgetbuddy.model.GastosDAO;
 import budgetbuddy.model.Ingresos;
 import budgetbuddy.model.IngresosDAO;
+import budgetbuddy.model.Recomendacion;
+import budgetbuddy.model.RecomendacionesDAO;
 import budgetbuddy.util.DBConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -78,22 +80,27 @@ public class InicioServlet extends HttpServlet {
 
             // Realizar operaciones basadas en la información del usuario
         }
+        System.out.println("budgetbuddy.controller.InicioServlet.doGet()");
         Connection coneccion;
          try {
             coneccion = DBConnection.getConnection();
             GastosDAO gastosDao = new GastosDAO(coneccion);
             IngresosDAO ingresosDao = new IngresosDAO(coneccion);
-            
+            RecomendacionesDAO recomDao = new RecomendacionesDAO(coneccion);
+            Recomendacion recomendacion = recomDao.obtenerUltimoRecomendacionPorUsuario(usuarioId);
             int gastosTotal = gastosDao.obtenerTotalGastosPorUsuario(usuarioId);
             int ingresosTotal = ingresosDao.obtenerTotalIngresosPorUsuario(usuarioId);
             int saldo = ingresosTotal - gastosTotal;
+            
             // Puedes almacenar la lista de gastos en el objeto request para que esté disponible en el JSP
             request.setAttribute("totalGastos", gastosTotal);
-             System.out.println(gastosTotal + ' ' +  ingresosTotal + ' ' + saldo);
+            System.out.println(gastosTotal + ' ' +  ingresosTotal + ' ' + saldo);
             request.setAttribute("totalIngresos", ingresosTotal);
             request.setAttribute("saldoInicio", saldo);
+            request.setAttribute("recomendacion", recomendacion.toString());
             // Despachar a la página JSP para mostrar los resultados
-            request.getRequestDispatcher("jsp/inicio.jsp").forward(request, response);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/inicio.jsp");
+            dispatcher.forward(request, response);
             //dispatcher.forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);

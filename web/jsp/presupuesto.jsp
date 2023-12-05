@@ -50,7 +50,7 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 20px;
-                background-color: yellow;
+                /*background-color: yellow;*/
             }
             .cuadro {
                 width: 48%;

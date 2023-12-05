@@ -72,7 +72,7 @@
             .content {
                 margin-left: 280px;
                 padding: 16px;
-                background-color: red;
+                /*background-color: red;*/
                 margin-left: 280px;
 
             }
@@ -170,7 +170,7 @@
 
                 <div>
                     <label>Nombre del platillo:</label>
-                    <label></label>
+                    <label><%= request.getAttribute("recomendacion") %></label>
                 </div>
 
                 <div>
@@ -224,8 +224,10 @@
             }
 
             function cerrarSesion() {
-                // Lógica para cerrar sesión
+               
                 alert('Sesión cerrada');
+                
+                window.location.href = '<%= request.getContextPath() %>/jsp/login.jsp';
             }
 
             function realizarAccion() {
